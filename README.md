@@ -121,16 +121,6 @@ If you run the server from the parent folder instead, open:
 http://localhost:8080/campus-lost-and-found-matcher/
 ```
 
-## Why This Project Is Good For Internships
-
-This project shows more than frontend design. It demonstrates:
-
-- problem-solving for a practical real-world use case
-- logic design through heuristic matching
-- data handling with arrays, objects, and browser storage
-- UI organization and portfolio presentation
-- the ability to explain algorithmic thinking in a simple product
-
 ## Future Scope
 
 - add user authentication
@@ -142,4 +132,4 @@ This project shows more than frontend design. It demonstrates:
 
 ## Author
 
-Pragya Tiwari
+Muskan Tiwari
