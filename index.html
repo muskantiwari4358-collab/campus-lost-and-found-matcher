@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus Lost-and-Found Matcher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <nav class="topbar">
+        <div class="brand">
+          <span class="brand-mark">LF</span>
+          <div>
+            <p class="eyebrow">Portfolio Project</p>
+            <h1>Campus Lost-and-Found Matcher</h1>
+          </div>
+        </div>
+        <button id="seed-demo" class="ghost-button">Reload demo data</button>
+      </nav>
+
+      <div class="hero-grid">
+        <section class="hero-copy">
+          <p class="pill">Human-centered campus utility</p>
+          <h2>Help students reconnect with lost items through smart matching.</h2>
+          <p class="hero-text">
+            This project lets students report lost and found items, then ranks the most likely matches
+            using category, location, time window, descriptive keywords, and visual cues like color or brand.
+          </p>
+          <div class="hero-actions">
+            <a href="#report" class="primary-button">Create a report</a>
+            <a href="#matches" class="secondary-button">See live matches</a>
+          </div>
+        </section>
+
+        <section class="stat-panel">
+          <article class="stat-card">
+            <span class="stat-label">Open reports</span>
+            <strong id="open-count">0</strong>
+            <p>Lost and found cases currently tracked in the dashboard.</p>
+          </article>
+          <article class="stat-card accent">
+            <span class="stat-label">High-confidence pairs</span>
+            <strong id="match-count">0</strong>
+            <p>Matches with a confidence score high enough to review first.</p>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Most common hotspot</span>
+            <strong id="hotspot-label">Library</strong>
+            <p>Automatically inferred from the current report pool.</p>
+          </article>
+        </section>
+      </div>
+    </header>
+
+    <main class="main-grid">
+      <section id="report" class="panel form-panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">New case</p>
+            <h3>Report a lost or found item</h3>
+          </div>
+          <p class="muted">The matcher updates instantly after each submission.</p>
+        </div>
+
+        <form id="report-form" class="report-form">
+          <div class="segmented">
+            <label>
+              <input type="radio" name="type" value="lost" checked />
+              <span>Lost</span>
+            </label>
+            <label>
+              <input type="radio" name="type" value="found" />
+              <span>Found</span>
+            </label>
+          </div>
+
+          <div class="field-grid">
+            <label>
+              Item title
+              <input name="title" type="text" placeholder="Blue Wildcraft backpack" required />
+            </label>
+            <label>
+              Category
+              <select name="category" required>
+                <option value="">Select a category</option>
+                <option>Electronics</option>
+                <option>Bag</option>
+                <option>ID Card</option>
+                <option>Accessory</option>
+                <option>Stationery</option>
+                <option>Clothing</option>
+                <option>Other</option>
+              </select>
+            </label>
+            <label>
+              Color
+              <input name="color" type="text" placeholder="Blue" required />
+            </label>
+            <label>
+              Brand
+              <input name="brand" type="text" placeholder="Wildcraft / Apple / Titan" />
+            </label>
+            <label>
+              Last seen location
+              <select name="location" required>
+                <option value="">Select location</option>
+                <option>Central Library</option>
+                <option>Hostel Block A</option>
+                <option>Lecture Hall Complex</option>
+                <option>Main Cafeteria</option>
+                <option>Sports Complex</option>
+                <option>Computer Lab</option>
+                <option>Auditorium</option>
+              </select>
+            </label>
+            <label>
+              Date
+              <input name="date" type="date" required />
+            </label>
+          </div>
+
+          <label class="full-width">
+            Description
+            <textarea
+              name="description"
+              rows="4"
+              placeholder="Mention unique markers, stickers, documents inside, time, or any useful clue."
+              required
+            ></textarea>
+          </label>
+
+          <div class="form-footer">
+            <p id="form-message" class="form-message"></p>
+            <button type="submit" class="primary-button">Save report</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel insights-panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Why it stands out</p>
+            <h3>Matching signals</h3>
+          </div>
+        </div>
+
+        <div class="signal-list">
+          <article>
+            <strong>Text overlap</strong>
+            <p>The app tokenizes descriptions and titles to compare meaningful words between reports.</p>
+          </article>
+          <article>
+            <strong>Metadata alignment</strong>
+            <p>Category, color, brand, and location influence the confidence score.</p>
+          </article>
+          <article>
+            <strong>Time proximity</strong>
+            <p>Reports close in date are ranked higher, which mimics real lost-and-found workflows.</p>
+          </article>
+          <article>
+            <strong>Live triage</strong>
+            <p>High-confidence pairs are surfaced at the top so volunteers can respond faster.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="matches" class="panel matches-panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Smart output</p>
+            <h3>Best match suggestions</h3>
+          </div>
+          <span class="legend">Confidence score out of 100</span>
+        </div>
+        <div id="matches-list" class="matches-list"></div>
+      </section>
+
+      <section class="panel reports-panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Dataset</p>
+            <h3>All reports</h3>
+          </div>
+          <div class="filter-wrap">
+            <label for="status-filter" class="sr-only">Filter reports</label>
+            <select id="status-filter">
+              <option value="all">All reports</option>
+              <option value="lost">Lost only</option>
+              <option value="found">Found only</option>
+            </select>
+          </div>
+        </div>
+        <div id="reports-list" class="reports-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
